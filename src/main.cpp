@@ -39,11 +39,11 @@
 // #define SPEED_STEP 20 // [-] Speed step
 // #define DEBUG_RX                        // [-] Debug received data. Prints all bytes to serial (comment-out to disable)
 
-#define FORWARD_SPEED_MAX 1024
+#define FORWARD_SPEED_MAX 1000
 #define BACKWARD_SPEED_MAX -300
-#define THROTTLE_FILTER_ACCELERATION 0.06
-#define THROTTLE_FILTER_BRAKE 0.02
-#define THROTTLE_FILTER_NEUTRAL 0.01
+#define THROTTLE_FILTER_ACCELERATION 0.022 // Lower value means slower acceleration
+#define THROTTLE_FILTER_BRAKE 0.03
+#define THROTTLE_FILTER_NEUTRAL 0.08
 #define THROTTLE_HISTERESIS 30
 
 #define TX_PIN PD1 // D1
