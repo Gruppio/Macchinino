@@ -39,12 +39,14 @@
 // #define SPEED_STEP 20 // [-] Speed step
 // #define DEBUG_RX                        // [-] Debug received data. Prints all bytes to serial (comment-out to disable)
 
-#define FORWARD_SPEED_MAX 1000
-#define BACKWARD_SPEED_MAX -300
-#define THROTTLE_FILTER_ACCELERATION 0.022 // Lower value means slower acceleration
-#define THROTTLE_FILTER_BRAKE 0.03
+#define FORWARD_SPEED_MAX 1000.0
+#define BACKWARD_SPEED_MAX -300.0
+#define THROTTLE_FILTER_ACCELERATION 0.021 // Lower value means slower acceleration
+#define THROTTLE_FILTER_BRAKE 0.024
 #define THROTTLE_FILTER_NEUTRAL 0.08
 #define THROTTLE_HISTERESIS 30
+#define MAX_THROTTLE_ACCELERATION_STEP 180.0
+#define MAX_THROTTLE_BRAKE_STEP -180.0
 
 #define TX_PIN PD1 // D1
 #define RX_PIN PD0 // D0
@@ -204,10 +206,10 @@ void loop(void)
   isBrakePedalPressed = !digitalRead(BRAKE_PIN);
 
   if (isBrakePedalPressed == 1) {
-    throttle = BACKWARD_SPEED_MAX;
+    throttle = max(BACKWARD_SPEED_MAX, throttleFiltered + MAX_THROTTLE_BRAKE_STEP);
     filterValue = THROTTLE_FILTER_BRAKE;
   } else if (isThrottlePedalPressed == 1) {
-    throttle = FORWARD_SPEED_MAX;
+    throttle = min(FORWARD_SPEED_MAX, throttleFiltered + MAX_THROTTLE_ACCELERATION_STEP);
     filterValue = THROTTLE_FILTER_ACCELERATION;
   } else {
     throttle = 0;
